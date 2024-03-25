@@ -1,20 +1,38 @@
+// DFS로 풀자!
+
+// [+1, +1, +1, +1, +1]
+// [+1, +1, +1, +1, -1]
+// [+1, +1, +1, -1, +1]
+// [+1, +1, +1, -1, -1]
+// [+1, +1, -1, +1, +1]
+// [+1, +1, -1, +1, -1]
+// [+1, +1, -1, -1, +1]
+// [+1, +1, -1, -1, -1]
+
+// 1. 이번턴에 어떤 동작을 수행할 것인가?
+// 2. 언제 탈출할 것인가?
+// 3. 누적합이 target과 같다면 return
+
 function solution(numbers, target) {
     let answer = 0;
-    const n = numbers.length;
-    
-    const dfs = (index, sum) => {
-        if (index == n) {
-            if (sum == target) {
+
+    function DFS(sum, depth) {
+        // 2)
+        if(depth == numbers.length) {
+            // 3)
+            if(sum == target) {
                 answer += 1;
             }
+
             return;
         }
-        
-        dfs(index + 1, sum + numbers[index]); // 현재 숫자를 더하는 경우
-        dfs(index + 1, sum - numbers[index]); // 현재 숫자를 빼는 경우
+
+        // 1)
+        DFS(sum + numbers[depth], depth+1);
+        DFS(sum - numbers[depth], depth+1);
     }
-    
-    dfs(0, 0); // 초기 인덱스와 합계는 0부터 시작합니다.
-    
+
+    DFS(0, 0);
+
     return answer;
 }
