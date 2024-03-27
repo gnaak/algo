@@ -1,27 +1,26 @@
-def card(n):
-    if n == k:
-        nums.append(''.join(temp))
+
+
+def making(N):
+    if N == k:
+        result.append(''.join(temp))
         return
 
-    for i in range(n1):
-        if check[i] == 1:
-            continue
+    for i in range(n):
+        if check[i] == 0:
+            check[i] = 1
+            temp.append(cards[i])
+            making(N+1)
+            temp.pop()
+            check[i]=0
 
-        check[i] = 1
-        temp.append(cards[i])
-        card(n+1)
-        check[i] = 0
-        temp.pop()
-
-n1 = int(input())
+n = int(input())
 k = int(input())
 cards = []
-nums = []
+result = []
 temp = []
-check = [0]*n1
-for _ in range(n1):
-    a = str(input())
-    cards.append(a)
+check = [0]*n
+for _ in range(n):
+    cards.append(str(input()))
 
-card(0)
-print(len(set(nums)))
+making(0)
+print(len(set(result)))
