@@ -1,14 +1,16 @@
 SELECT FLAVOR
 FROM (
-    SELECT FLAVOR, SUM(TOTAL_ORDER) AS total_orders
+    SELECT FLAVOR, SUM(TOTAL_ORDER) AS TOTAL
     FROM (
         SELECT FLAVOR, TOTAL_ORDER
         FROM FIRST_HALF
+        
         UNION ALL
+        
         SELECT FLAVOR, TOTAL_ORDER
         FROM JULY
-    ) AS combined_orders
+    ) AS COM
     GROUP BY FLAVOR
-    ORDER BY total_orders DESC
-    LIMIT 3
-) AS top_flavors;
+ORDER BY TOTAL DESC
+    LIMIT 3)
+    AS AASD
