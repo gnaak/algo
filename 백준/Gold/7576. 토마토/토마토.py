@@ -1,49 +1,42 @@
-'''
-백준 골드 5
-토마토
-'''
-
-import sys
-input = sys.stdin.readline
 from collections import deque
+import sys
+input=sys.stdin.readline
 
-m, n = map(int,input().split()) # 가로 칸 수, 세로 칸 수
-box = []
-for _ in range(n):
-    a = list(map(int,input().split()))
-    box.append(a)
-
-dx = [1,0,-1,0]
-dy = [0,1,0,-1]
-cnt = 0
-queue = deque([])
-
-def bfs():
-    for y in range(n):
-        for x in range(m):
-            if box[y][x] == 1:
-                queue.append((y,x))
+def bfs(graph,sp):
+    queue=deque([])
+    t=0
+    for si,sj in sp:
+        queue.append((t,si,sj))
+    
     while queue:
-        ay, ax = queue.popleft()
-        for i in range(4):
-            nx = ax + dx[i]
-            ny = ay + dy[i]
-            if 0<=nx<m and 0<=ny<n and box[ny][nx] == 0:
-                box[ny][nx] = box[ay][ax] +1
-                queue.append((ny,nx))
+        t,i,j=queue.popleft()
+        if i+1<n and graph[i+1][j]==0:
+            graph[i+1][j]=1
+            queue.append((t+1,i+1,j))
+        if i-1>-1 and graph[i-1][j]==0:
+            graph[i-1][j]=1
+            queue.append((t+1,i-1,j))
+        if j+1<m and graph[i][j+1]==0:
+            graph[i][j+1]=1
+            queue.append((t+1,i,j+1))
+        if j-1>-1 and graph[i][j-1]==0:
+            graph[i][j-1]=1
+            queue.append((t+1,i,j-1))
+    
+    return graph,t
 
-bfs()
+m,n=map(int,input().split())
 
-answer = 0
-for y in range(n):
-    for x in range(m):
-        if box[y][x] == 0:
-            answer = -1
-            break
-        else:
-            cnt = max(cnt, box[y][x])
+graph=[]
+for _ in range(n):
+    graph.append(list(map(int,input().split())))
 
-if answer:
-    print(answer)
-else:
-    print(cnt-1)
+sp=[(i,j) for i in range(n) for j in range(m) if graph[i][j]==1]
+graph,result=bfs(graph,sp)
+
+for i in range(n):
+    if not all(graph[i]):
+        print(-1)
+        quit()
+        
+print(result)
