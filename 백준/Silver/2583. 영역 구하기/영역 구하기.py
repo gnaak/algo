@@ -32,11 +32,10 @@ area = []
 for i in range(m):
     for j in range(n):
         if maps[i][j] == 0 and visited[i][j] == 0:
-            cnt += 1
             visited[i][j] = 1
             queue.append((i, j))
             bfs()
 
-print(cnt)
 area.sort()
+print(len(area))
 print(*area)
