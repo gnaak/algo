@@ -1,24 +1,31 @@
 import sys
-sys.stdin.readline
-import heapq
+input = sys.stdin.readline
+V, E = map(int,input().split())
+memory=[]
+# cost순으로 정렬
+for _ in range(E):
+    a,b,c = map(int,input().split())
+    memory.append((c,a,b))
+memory.sort()
 
-v, e = map(int, input().split())
-graph = [[] for _ in range(v+1)]
-for i in range(e):
-    a, b, c = map(int, input().split())
-    graph[a].append([b, c])
-    graph[b].append([a, c])
+parent=[i for i in range(V+1)]
 
-chk = [0]*(v+1)
-heap = [[0, 1]]
-rs = 0
-while heap:
-    w, node = heapq.heappop(heap)
-    if chk[node] == 0:
-        chk[node] = 1
-        rs += w
-        for next_node, weight in graph[node]:
-            if chk[next_node] == 0:
-                heapq.heappush(heap, [weight, next_node])
+def find_parent(x):
+    if parent[x]!=x:
+        parent[x]=find_parent(parent[x])
+    return parent[x]
 
-print(rs)
+def union_parent(a,b):
+    a=find_parent(a)
+    b=find_parent(b)
+    if a>b:
+        parent[a]=b
+    else:
+        parent[b]=a
+
+result=0
+for cost,a,b in memory:
+    if find_parent(a)!=find_parent(b):
+        union_parent(a,b)
+        result+=cost
+print(result)
