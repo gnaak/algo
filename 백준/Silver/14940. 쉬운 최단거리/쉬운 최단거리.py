@@ -29,9 +29,7 @@ for i in range(n):
         if board[i][j] == 2:
             start_y, start_x = i, j
             break
-    if start_y != -1:
-        break
-
+            
 visited[start_y][start_x] = 1
 board[start_y][start_x] = 0
 bfs(start_y, start_x)
