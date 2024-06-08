@@ -1,4 +1,6 @@
 from collections import deque
+import sys
+input = sys.stdin.readline
 
 def bfs():
     queue = deque([(0, 0, 1, 0)])  # 시작점과 카운트를 큐에 추가
