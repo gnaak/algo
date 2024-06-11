@@ -3,6 +3,8 @@
 단어 정렬
 '''
 
+import sys
+input = sys.stdin.readline
 
 n = int(input())
 lst = []
@@ -15,4 +17,4 @@ lst.sort()
 lst.sort(key = len)
 
 for i in lst:
-    print(i)
+    print(i, end='')
