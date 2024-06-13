@@ -6,30 +6,28 @@ for _ in range(n):
 
 answer = [0, 0]  # [가로로 누울 자리, 세로로 누울 자리]
 
-# 가로로 누울 자리 카운트
 for i in range(n):
-    count = 0
+    count_row = 0
     for j in range(n):
         if room[i][j] == '.':
-            count += 1
+            count_row += 1
         else:
-            if count >= 2:
+            if count_row >= 2:
                 answer[0] += 1
-            count = 0
-    if count >= 2:
+            count_row = 0
+    if count_row >= 2:
         answer[0] += 1
 
-# 세로로 누울 자리 카운트
-for i in range(n):
-    count = 0
+    count_column = 0
     for j in range(n):
         if room[j][i] == '.':
-            count += 1
+            count_column += 1
         else:
-            if count >= 2:
+            if count_column >= 2:
                 answer[1] += 1
-            count = 0
-    if count >= 2:
+            count_column = 0
+    if count_column >= 2:
         answer[1] += 1
+
 
 print(*answer)
