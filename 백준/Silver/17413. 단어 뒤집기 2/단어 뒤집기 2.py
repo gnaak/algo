@@ -12,13 +12,10 @@ answer = ''
 word = '' # 단어
 isTag = 0 # 태그 여부
 for i in range(len(s)): # 문자 전체 길이에 대해서
-    if s[i] == ' ': # 공백이 오면,
+    if s[i] == ' ' or s[i] == '<': # 공백이 오면,
         answer += word[::-1]
-        answer += ' '
-        word = ''
-    elif s[i] == '<':
-        isTag = 1 # 태그 열림 표시
-        answer += word[::-1] # 태그 열기 전에 앞에 글자가 있으면 추가
+        if s[i] == '<':
+            isTag = 1  # 태그 열림 표시
         answer += s[i]
         word = ''
     elif s[i] == '>':
