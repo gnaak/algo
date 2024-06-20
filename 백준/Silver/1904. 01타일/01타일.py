@@ -1,20 +1,20 @@
-import sys
-input = sys.stdin.readline
+def count_num(N) :
+    MOD = 15746
+    
+    if N == 1:
+        return 1
+    if N == 2:
+        return 2
+    
+    arr = [0] * (N+1)
 
-n = int(input())
+    arr[1] = 1
+    arr[2] = 2
 
-if n == 1:
-    print(1)
-elif n == 2:
-    print(2)
-else:
-    prev2 = 1
-    prev1 = 2
-    current = 0
+    for i in range(3,N+1):
+        arr[i] = (arr[i-1] + arr[i-2]) % MOD
+    
+    return arr[N]
 
-    for i in range(3, n+1):
-        current = (prev2 + prev1) % 15746
-        prev2 = prev1
-        prev1 = current
-
-    print(current)
+N = int(input())
+print(count_num(N))
