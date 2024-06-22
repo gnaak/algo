@@ -1,17 +1,17 @@
+import math
 import sys
-input = sys.stdin.readline
 
-def min_squares(n):
-    dp = [float('inf')] * (n + 1)
-    dp[0] = 0
-    
-    for i in range(1, n + 1):
-        j = 1
-        while j * j <= i:
-            dp[i] = min(dp[i], dp[i - j * j] + 1)
-            j += 1
-    
-    return dp[n]
 
 n = int(input())
-print(min_squares(n))
+
+dp = [1e9 for i in range(n+1)]
+
+for i in range(1, n + 1):
+    # 제곱근인 경우
+    if math.isqrt(i) ** 2 == i:
+        dp[i] = 1
+    else:
+        for j in range(1, int(i ** 0.5) + 1):
+            if dp[i] > (dp[i - j * j] + 1):
+                dp[i] = dp[i - j * j] + 1
+print(dp[n])
