@@ -1,28 +1,33 @@
 import sys
 input = sys.stdin.readline
 
-def dfs(now, idx):
-    for node in arr[idx]: # 나보다 큰 친구들을 돌면서
-        if visited[now][node] == 0 : # 아직 확인을 안한 친구면,
-            visited[now][node]= 1 # 나보다 크다고 표시를 해주고
-            visited[node][now]= 1 # 반대로 그 친구한테는 내가 더 작은걸 아는 것을 표시
-            dfs(now,node) # 이제 나보다 더 친구보다 큰 친구를 찾으러 출발
+def dfs(now, visit, graph):
+    visit[now] = 1
+    for nxt in graph[now]:
+        if visit[nxt]:
+            continue
+        dfs(nxt, visit, graph)
 
-n, m = map(int,input().split()) # 학생의 수, 비교한 횟수
-arr = [[] for _ in range(n+1)]
-for _ in range(m):
-    a, b = map(int,input().split())
-    arr[a].append(b) # 나보다 큰 아이들을 넣어준다
+def solution():
+    N, M = map(int, input().split())
+    graph = [[] for _ in range(N + 1)]
+    for _ in range(M):
+        a, b = map(int, input().split())
+        graph[a].append(b)
+    visited = [[0 for _ in range(N + 1)] for _ in range(N + 1)]
 
-visited = [[0]*(n+1) for _ in range(n+1)]
+    for i in range(1, N + 1):
+        dfs(i, visited[i], graph)
 
-for i in range(1,n+1):
-    visited[i][i] = 1
-    dfs(i,i)
+    result = 0
+    for i in range(1, N + 1):
+        cnt = 0
+        for j in range(1, N + 1):
+            if visited[i][j] or visited[j][i]:
+               cnt += 1
+        if cnt == N:
+            result += 1
 
-cnt = 0
-for i in range(1,n+1):
-    if sum(visited[i]) == n :
-        cnt += 1
+    print(result)
 
-print(cnt)
+solution()
