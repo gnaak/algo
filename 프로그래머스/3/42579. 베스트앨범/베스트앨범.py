@@ -1,19 +1,19 @@
-def solution(g, p):
-    lst = {}
-    g_lst = {}
+def solution(genres, plays):
+    genre_lst = {}
+    genre_lst_each = {}
     answer = []
-    for i in range(len(g)):
-        if g[i] not in lst:
-            lst[g[i]] = 0
-            g_lst[g[i]] = []
-        lst[g[i]] += p[i]
-        g_lst[g[i]].append((p[i],i))
-    lst = sorted(lst.items(), key=lambda x: x[1], reverse=True)
+    for i in range(len(genres)):
+        if genres[i] not in genre_lst:
+            genre_lst[genres[i]] = 0
+            genre_lst_each[genres[i]] = []
+        genre_lst[genres[i]] += plays[i]
+        genre_lst_each[genres[i]].append((plays[i],i))
+    genre_lst = sorted(genre_lst.items(), key=lambda x: x[1], reverse=True)
 
-    for genre, _ in lst:
+    for genre, _ in genre_lst:
         print(genre)
-        g_lst[genre].sort(key=lambda x: (-x[0], x[1]))
+        genre_lst_each[genre].sort(key=lambda x: (-x[0], x[1]))
 
-        for i in range(min(2,len(g_lst[genre]))):
-            answer.append(g_lst[genre][i][1])
+        for i in range(min(2,len(genre_lst_each[genre]))):
+            answer.append(genre_lst_each[genre][i][1])
     return answer
