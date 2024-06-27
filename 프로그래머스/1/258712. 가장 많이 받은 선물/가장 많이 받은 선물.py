@@ -28,7 +28,7 @@ def solution(friends, gifts):
                 if graph[i][j] != graph[j][i]:
                     if graph[i][j] > graph[j][i]:
                         gift[i] += 1
-                else: # 주고 받은 선물 수가 같을 때 (둘 다 안주고 받아서 0, 0 이여도 처리됨)
+                else: 
                     if gift_r[friends[i]] != gift_r[friends[j]]:
                         if gift_r[friends[i]] > gift_r[friends[j]]: 
                             gift[i] += 1
