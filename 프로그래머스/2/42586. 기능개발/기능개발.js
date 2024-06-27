@@ -1,26 +1,26 @@
 function solution(progresses, speeds) {
     var answer = [];
-    let total = 100;
-    let queue = []
-    for (let i=0; i<speeds.length; i++){
-        queue.push(Math.ceil((total-progresses[i])/speeds[i]))
+    const n = speeds.length
+    const days = new Array(n).fill()
+    for(let i=0; i<n; i++){
+        const leftOver = Math.ceil((100-progresses[i])/speeds[i])
+        days[i] = leftOver
     }
-    let cnt = 1
-    let current = queue.shift()
-    while (queue.length > 0){
-        if (current >= queue[0]){
+    console.log(days)
+    let cnt = 1 
+    let current = days.shift()
+    while (days.length > 0){
+        if (current >= days[0]){
             cnt+=1
-            queue.shift()
+            days.shift()
         }
         else{
-                        answer.push(cnt);
+            answer.push(cnt)
             cnt = 1
-            current = queue.shift()
+            current = days.shift()
         }
     }
     answer.push(cnt)
+    console.log(answer)
     return answer;
 }
-
-
-
