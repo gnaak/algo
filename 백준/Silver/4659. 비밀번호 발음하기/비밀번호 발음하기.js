@@ -16,7 +16,6 @@ function checkPassword(word) {
   for (let i = 0; i < word.length; i++) {
     const char = word[i];
 
-    // Check if the character is a vowel
     if (isVowel(char)) {
       hasVowel = true;
       vowelCount++;
@@ -26,12 +25,10 @@ function checkPassword(word) {
       consonantCount++;
     }
 
-    // Check for three consecutive vowels or consonants
     if (vowelCount >= 3 || consonantCount >= 3) {
       return false;
     }
 
-    // Check for consecutive same characters (excluding "ee" and "oo")
     if (char === prevChar && char !== "e" && char !== "o") {
       return false;
     }
@@ -39,7 +36,6 @@ function checkPassword(word) {
     prevChar = char;
   }
 
-  // Check if there is at least one vowel
   if (!hasVowel) {
     return false;
   }
