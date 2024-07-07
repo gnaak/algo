@@ -1,27 +1,18 @@
-function dfs(k,dungeons,visit,index,answer,resultArr){
+function solution(k, d) {
+  const dfs = (k, cnt) => {
+    answer = Math.max(answer, cnt);
 
-    for(let a=0;a<dungeons.length;a++){
-        if((!visit[a])&&(k>=dungeons[a][0])){   
-            resultArr.push(answer+1);
-            k-=dungeons[a][1];
-            visit[a]=1;
-            dfs(k,dungeons,visit,a+1,answer+1,resultArr);
-            visit[a]=0;
-            k+=dungeons[a][1];
-
-        }
+    for (let i = 0; i < d.length; i++) {
+      if (k >= d[i][0] && visited[i] == 0) {
+        visited[i] = 1;
+        dfs(k - d[i][1], cnt + 1);
+        visited[i] = 0;
+      }
     }
+  };
 
-
-}
-function solution(k, dungeons) {
-    var answer = 0;
-    let index=0;
-    const result=[];
-    const visit=Array(dungeons.length).fill(0);
-
-    dfs(k,dungeons,visit,index,answer,result);
-  answer= Math.max(...result);
-
-    return answer;
+  var answer = 0;
+  let visited = Array(d.length).fill(0);
+  dfs(k, 0);
+  return answer;
 }
