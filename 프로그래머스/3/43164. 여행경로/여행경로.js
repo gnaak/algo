@@ -24,16 +24,6 @@ function solution(tickets) {
     // "ICN" 공항에서 출발하여 DFS 시작
     dfs("ICN", ["ICN"], Array(tickets.length).fill(false));
 
-    // 알파벳 순으로 가장 빠른 경로를 선택
-    answer.sort();
-
     return answer[0]; // 가장 빠른 경로 반환
 }
 
-// Example 1
-const tickets1 = [["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]];
-console.log(solution(tickets1)); // Output: ["ICN", "JFK", "HND", "IAD"]
-
-// Example 2
-const tickets2 = [["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]];
-console.log(solution(tickets2)); // Output: ["ICN", "ATL", "ICN", "SFO", "ATL", "SFO"]
