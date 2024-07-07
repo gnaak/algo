@@ -1,42 +1,39 @@
 function solution(tickets) {
-    let answer = [];
-    const visited = new Array(tickets.length).fill(false);
-    let route = [];
+    const answer = [];
 
-    tickets.sort(); // 항공권을 알파벳 순서대로 정렬
+    // tickets를 알파벳 순으로 정렬하기
+    tickets.sort();
 
-    function dfs(current, depth) {
-        route.push(current); // 경로에 현재 공항 추가
-
-        if (depth === tickets.length) {
-            if (answer.length === 0 || compareRoutes(route, answer) < 0) {
-                answer = route.slice(); // 현재 경로가 알파벳 순서가 앞서는 경로이면 정답으로 선택
-            }
+    function dfs(current, path, usedTickets) {
+        // 모든 항공권을 사용한 경우, 현재 경로를 정답으로 설정
+        if (path.length === tickets.length + 1) {
+            answer.push(path.slice()); // 경로 복사
             return;
         }
 
         for (let i = 0; i < tickets.length; i++) {
-            if (!visited[i] && tickets[i][0] === current) {
-                visited[i] = true;
-                dfs(tickets[i][1], depth + 1); // 다음 공항으로 이동
-                visited[i] = false;
-                route.pop(); // 백트래킹: 경로에서 이전 공항 제거
+            // 사용하지 않은 항공권 중에서 현재 공항에서 출발하는 항공권을 찾음
+            if (!usedTickets[i] && tickets[i][0] === current) {
+                usedTickets[i] = true; // 해당 항공권을 사용 표시
+                dfs(tickets[i][1], [...path, tickets[i][1]], usedTickets); // 다음 공항으로 DFS 진행
+                usedTickets[i] = false; // 백트래킹: 다른 경로를 탐색하기 위해 사용 표시 해제
             }
         }
     }
 
-    function compareRoutes(route1, route2) {
-        for (let i = 0; i < route1.length; i++) {
-            if (route1[i] < route2[i]) {
-                return -1; // route1이 route2보다 알파벳 순서가 앞서면 음수 반환
-            } else if (route1[i] > route2[i]) {
-                return 1; // route1이 route2보다 알파벳 순서가 뒤쪽이면 양수 반환
-            }
-        }
-        return 0; // 두 경로가 동일하면 0 반환
-    }
+    // "ICN" 공항에서 출발하여 DFS 시작
+    dfs("ICN", ["ICN"], Array(tickets.length).fill(false));
 
-    dfs("ICN", 0); // 출발 공항은 ICN
+    // 알파벳 순으로 가장 빠른 경로를 선택
+    answer.sort();
 
-    return answer;
+    return answer[0]; // 가장 빠른 경로 반환
 }
+
+// Example 1
+const tickets1 = [["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]];
+console.log(solution(tickets1)); // Output: ["ICN", "JFK", "HND", "IAD"]
+
+// Example 2
+const tickets2 = [["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]];
+console.log(solution(tickets2)); // Output: ["ICN", "ATL", "ICN", "SFO", "ATL", "SFO"]
