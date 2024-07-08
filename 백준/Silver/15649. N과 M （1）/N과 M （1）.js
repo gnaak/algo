@@ -1,24 +1,28 @@
 const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "input.txt";
+const [N, M] = fs.readFileSync(filePath, "utf-8").trim().split(" ").map(Number);
 
-const [a, b] = input[0].split(" ").map(Number);
-const tmp = []
-
-function f() {
-  if (tmp.length == b) {
-    console.log(tmp.join(' '))
-    return
+const solve = (depth) => {
+  if (depth === M) {
+    output += save.join(" ");
+    output += "\n";
+    return;
   }
 
-  else {
-    for (let i = 1; i <= a; i++){
-      if (!tmp.includes(i)) {
-        tmp.push(i)
-        f()
-        tmp.pop()
-      }
+  for (let i = 1; i <= N; i++) {
+    if (!isChecked[i]) {
+      isChecked[i] = true;
+      save[depth] = i;
+      solve(depth + 1);
+      isChecked[i] = false;
     }
   }
-}
+};
 
-f()
+const isChecked = new Array(N + 1).fill(false);
+const save = new Array(M).fill(0);
+let output = "";
+
+solve(0);
+
+console.log(output);
