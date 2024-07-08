@@ -1,29 +1,25 @@
-function solution(tickets) {
-    const answer = [];
-
-    // tickets를 알파벳 순으로 정렬하기
-    tickets.sort();
-
-    function dfs(current, path, usedTickets) {
-        // 모든 항공권을 사용한 경우, 현재 경로를 정답으로 설정
-        if (path.length === tickets.length + 1) {
-            answer.push(path.slice()); // 경로 복사
-            return;
+function solution(t) {
+    t.sort()
+    let visited = Array(t.length).fill(0)
+    let answer = ["ICN"]
+    let result = []
+    function dfs(start, cnt, answer){
+        if (cnt == t.length){
+            result.push(answer.slice())
+            return 
         }
-
-        for (let i = 0; i < tickets.length; i++) {
-            // 사용하지 않은 항공권 중에서 현재 공항에서 출발하는 항공권을 찾음
-            if (!usedTickets[i] && tickets[i][0] === current) {
-                usedTickets[i] = true; // 해당 항공권을 사용 표시
-                dfs(tickets[i][1], [...path, tickets[i][1]], usedTickets); // 다음 공항으로 DFS 진행
-                usedTickets[i] = false; // 백트래킹: 다른 경로를 탐색하기 위해 사용 표시 해제
+        for (let i =0; i<t.length; i++){
+            if (t[i][0] == start && visited[i] == 0){
+                visited[i] = 1
+                answer.push(t[i][1])
+                dfs(t[i][1], cnt+1,answer)
+                answer.pop()
+                visited[i] = 0 
+                
             }
         }
+
     }
-
-    // "ICN" 공항에서 출발하여 DFS 시작
-    dfs("ICN", ["ICN"], Array(tickets.length).fill(false));
-
-    return answer[0]; // 가장 빠른 경로 반환
+    dfs("ICN", 0, answer);
+    return result[0]
 }
-
