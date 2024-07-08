@@ -19,7 +19,7 @@ function solution(n, wires) {
   }
 
   function makeGraph(n, wire) {
-    let graph = Array.from({ length: n }, () => []); // 배열을 n개의 빈 배열로 초기화
+    let graph = Array.from({ length: n }, () => Array(1).fill([])); // 배열을 n개의 빈 배열로 초기화
     for ([s, e] of wire) {
       // 양방향 그래프이므로 양쪽에 다 표시해줌 
       graph[s - 1].push(e - 1);
