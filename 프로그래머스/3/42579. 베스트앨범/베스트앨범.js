@@ -1,26 +1,19 @@
-function solution(genres, plays) {
-    let genre_lst = {};
-    let genre_lst_each = {};
-    let answer = [];
-
-    for (let i = 0; i < genres.length; i++) {
-        if (!genre_lst[genres[i]]) {
-            genre_lst[genres[i]] = 0;
-            genre_lst_each[genres[i]] = [];
-        }
-        genre_lst[genres[i]] += plays[i];
-        genre_lst_each[genres[i]].push([plays[i], i]);
+function solution(gs, ps) {
+    var answer = [];
+    let gSort = new Map()
+    const eg = {}
+    for (let i = 0; i< gs.length; i++){
+        gSort.set(gs[i], (gSort.get(gs[i])||0) + ps[i])
+        if (!eg[gs[i]]) eg[gs[i]] = []
+        eg[gs[i]].push({plays: ps[i], idx : i})
     }
-
-    genre_lst = Object.entries(genre_lst).sort((a, b) => b[1] - a[1]);
-
-    for (let [genre, _] of genre_lst) {
-        genre_lst_each[genre].sort((a, b) => b[0] - a[0] || a[1] - b[1]);
-
-        for (let i = 0; i < Math.min(2, genre_lst_each[genre].length); i++) {
-            answer.push(genre_lst_each[genre][i][1]);
+    gSort = [...gSort].sort((a,b)=> b[1]-a[1])
+    for (s of gSort){
+        // console.log(s[0]) 'pop' , 'classic'
+        for (let i=0; i< Math.min(2, eg[s[0]].length); i++){
+            eg[s[0]].sort((a,b)=> b.plays - a.plays)
+            answer.push(eg[s[0]][i].idx)
         }
     }
-
     return answer;
 }
