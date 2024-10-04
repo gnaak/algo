@@ -1,17 +1,19 @@
+import sys
+input = sys.stdin.readline
+
 n = int(input())
-
-books = dict()
-
+book_lst = dict()
 for _ in range(n):
-    title = input().strip()
-    if title in books:
-        books[title] += 1
+    book = input()
+    if book in book_lst:
+        book_lst[book] += 1
     else:
-        books[title] = 1
+        book_lst[book] = 1
 
-max_books = max(books.values())
-
-answer = [title for title, cnt in books.items() if cnt == max_books]
-answer.sort()
-
-print(answer[0])
+ans_lst = []
+max_cnt = max(book_lst.values())
+for book, cnt in book_lst.items():
+    if cnt == max_cnt:
+        ans_lst.append(book)
+ans_lst.sort()
+print(ans_lst[0])
