@@ -1,20 +1,17 @@
-'''
-백준 실버 5
-단어 정렬
-'''
+# 알파벳 소문자가 들어오면 1. 길이가 짧은 순서, 길이가 같다면 사전 순으로
 
 import sys
 input = sys.stdin.readline
 
 n = int(input())
-lst = []
+words = []
+for _ in range(n):
+    words.append(input())
 
-for i in range(n):
-    lst.append(input())
-set_lst = set(lst)	## set으로 변환해서 중복값을 제거
-lst = list(set_lst)	## 다시 list로 변환
-lst.sort()
-lst.sort(key = len)
+set_lst = set(words)
+word_lst = list(set_lst)
+word_lst.sort()
+word_lst.sort(key=len)
 
-for i in lst:
-    print(i, end='')
+for word in word_lst:
+    print(word, end = '')
