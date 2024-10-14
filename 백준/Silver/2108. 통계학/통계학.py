@@ -9,7 +9,7 @@ import sys
 input = sys.stdin.readline
 
 nums = []
-nums_dict = {}
+nums_dict = dict()
 n = int(input()) # n개의 수
 for _ in range(n):
     a = int(input())
@@ -20,6 +20,7 @@ for _ in range(n):
         nums_dict[a] = 1
 
 nums.sort()
+
 # 산술평균
 print(round(sum(nums)/n))
 
@@ -28,15 +29,17 @@ print(nums[n//2])
 
 # 최빈값
 small = []
+mx = max(nums_dict.values())
 for number, times in nums_dict.items():
-    if times == max(nums_dict.values()):
+    if times == mx:
         small.append(number)
+
 small.sort()
 
-if len(small) > 1:
-    print(small[1])
-else:
+if len(small) == 1:
     print(small[0])
+else:
+    print(small[1])
 
 # 범위
 print(nums[-1] - nums[0])
