@@ -1,14 +1,13 @@
--- 2022년 4월 13일 취소되지 않은 흉부외과(CS) 진료 예약 내역을 조회하는 SQL문 
--- 진료예약번호, 환자이름, 환자번호,진료과코드, 의사이름, 진료예약일시가 항목에 출력되도록 
-
+-- 2022년 4월 13일 취소되지 않은 CS 진료예약을 조회 
+-- 진료예약번호, 환자이름, 환자번호, 진료과코드, 의사이름, 진료예약일시 출력 
+-- 진료예약일시 오름차순 
 SELECT B.APNT_NO, A.PT_NAME, A.PT_NO, B.MCDP_CD, B.DR_NAME, B.APNT_YMD
-FROM PATIENT AS A 
-JOIN (
-    SELECT D.DR_NAME, D.MCDP_CD, AP.APNT_NO, AP.APNT_YMD, AP.PT_NO
-    FROM DOCTOR AS D 
-    JOIN APPOINTMENT AS AP 
-    ON D.DR_ID = AP.MDDR_ID
-    WHERE AP.APNT_CNCL_YN = 'N' AND D.MCDP_CD = 'CS' AND AP.APNT_YMD LIKE '2022-04-13%'
-) AS B
+FROM PATIENT AS A
+RIGHT JOIN (SELECT APNT_NO, A.MCDP_CD, DR_NAME, APNT_YMD, PT_NO 
+      FROM DOCTOR AS D 
+      RIGHT JOIN APPOINTMENT AS A
+      ON D.DR_ID = A.MDDR_ID 
+      WHERE A.APNT_YMD LIKE '2022-04-13%' AND A.APNT_CNCL_YN = 'N'  AND D.MCDP_CD = 'CS'
+     ) AS B 
 ON A.PT_NO = B.PT_NO
 ORDER BY B.APNT_YMD
