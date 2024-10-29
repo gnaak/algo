@@ -20,6 +20,5 @@ if n == 0 :
     print(0)
 else:
     a = my_round(n*0.15)
-    if a > 0 :
-        scores = scores[a:-a]
+    scores = scores[a:n-a]
     print(my_round(sum(scores)/len(scores)))
