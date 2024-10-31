@@ -2,11 +2,13 @@ import sys
 input = sys.stdin.readline
 from collections import deque
 
-queue = deque([])
-n = int(input())
-result = []
+
 
 def main():
+    queue = deque([])
+    n = int(input())
+    result = []
+    
     for _ in range(n):
         command_lst = list(map(str, input().split()))
         command = command_lst[0]
@@ -25,7 +27,7 @@ def main():
             result.append(queue[0] if queue else -1)
         else:
             result.append(queue[-1] if queue else -1)
-    
+
     # 결과 한 번에 출력
     print('\n'.join(map(str,result)))
 
