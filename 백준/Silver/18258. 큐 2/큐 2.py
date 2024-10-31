@@ -8,9 +8,9 @@ def main():
     queue = deque([])
     n = int(input())
     result = []
-    
+
     for _ in range(n):
-        command_lst = list(map(str, input().split()))
+        command_lst = input().strip().split()
         command = command_lst[0]
         if command == 'push':
             queue.append(int(command_lst[1]))
