@@ -1,35 +1,38 @@
-import heapq
+# 최소 비용 구하기
+# 가중치가 있으니까 다익스트라
 import sys
 input = sys.stdin.readline
+import heapq
+inf = 1e9
 
+def travel(start, end):
+    queue = []
+    heapq.heappush(queue,(0,start))
+    visited[start] = 0
+    while queue:
+        cost, current = heapq.heappop(queue)
 
-def dijkstra(s,e):
-    q = []
-    heapq.heappush(q, (0,s))
-    d[s] = 0
-    while q:
-        dst, now = heapq.heappop(q)
-
-        if d[now] < dst:
+        if visited[current] < cost:
             continue
 
-        for next in g[now]:
-            next_node = next[1]
-            cost = next[0]
-            new_cost = cost + dst
+        for next in buses[current]:
+            nxt_stop, fee = next
+            new_cost = cost + fee
 
-            if d[next_node] <= new_cost:
-                continue
-            d[next_node] = new_cost
-            heapq.heappush(q,(new_cost,next_node))
-    return d[e]
+            if visited[nxt_stop] > new_cost:
+                visited[nxt_stop] = new_cost
+                heapq.heappush(queue,(new_cost, nxt_stop))
 
-n = int(input())
-m = int(input())
-g = [[] for _ in range(n+1)]
-d = [100000000001]*(n+1)
+    return visited[end]
+
+
+n = int(input()) # 도시의 개수 n
+m = int(input()) # 버스의 개수 m
+buses = [[] for _ in range(n+1)]
+visited = [inf]*(n+1)
 for _ in range(m):
-    f,t,w = map(int,input().split())
-    g[f].append((w,t))
-s, e = map(int,input().split())
-print(dijkstra(s,e))
+    u, v, w = map(int,input().split())
+    buses[u].append((v, w))
+start, end = map(int,input().split())
+min_cost = travel(start, end)
+print(min_cost)
