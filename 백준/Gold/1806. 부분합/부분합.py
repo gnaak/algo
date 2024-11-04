@@ -1,24 +1,16 @@
-import sys
 
-n, s = map(int, input().split())  # n길이의 수열, 목표 합 s
-nums = list(map(int, input().split()))
-ans = nums[0]
-start = 0
-end = 1
-cnt = sys.maxsize
 
-while True:
-    if ans >= s:
-        cnt = min(cnt, end - start)
-        ans -= nums[start]
-        start += 1
-    elif end == n:
-        break
-    else:
-        ans += nums[end]
+n, s = map(int,input().split())
+elements = list(map(int,input().split()))
+cnt = 1e9
+end = 0
+tot_sum = 0
+for start in range(n):
+    while tot_sum < s and end < n:
+        tot_sum += elements[end]
         end += 1
+    if tot_sum >= s and end - start < cnt :
+        cnt = end - start
+    tot_sum -= elements[start]
 
-if cnt == sys.maxsize:
-    print(0)
-else:
-    print(cnt)
+print(cnt if cnt != 1e9 else 0)
