@@ -1,12 +1,9 @@
-from collections import deque
 def solution(elements):
-    queue = deque(elements)
+    n = len(elements)
     answer = set()
     for i in range(len(elements)):
         sum = 0
-        for e in queue:
-            sum += e
+        for j in range(i, n + i):
+            sum += elements[j % n]
             answer.add(sum)
-        queue.rotate()
-    
     return len(answer)
