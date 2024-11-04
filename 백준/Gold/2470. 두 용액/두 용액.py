@@ -7,7 +7,7 @@ liq.sort()
 
 start = 0
 end = n - 1
-ans = []
+
 
 while start < end :
     tot = liq[start] + liq[end]
