@@ -1,19 +1,16 @@
-'''
-백준 실버 3
-수열
-'''
+# 수열
 
 import sys
-sys.stdin.readline
+input = sys.stdin.readline
 
 n, k = map(int,input().split())
-temp = list(map(int,input().split()))
-f = 0
-for i in range(k):
-    f += temp[i]
-maxt = f
-for i in range(k,n):
-    f+=temp[i]
-    f-=temp[i-k]
-    maxt = max(maxt, f)
-print(maxt)
+temps = list(map(int,input().split()))
+
+standard = sum(temps[:k])
+max_temp = standard
+for end in range(k,n):
+    standard += temps[end] - temps[end-k]
+    if standard > max_temp:
+        max_temp = standard
+
+print(max_temp)
