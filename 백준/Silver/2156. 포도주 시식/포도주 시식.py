@@ -1,29 +1,26 @@
+# 포도주 시식
+
 import sys
 input = sys.stdin.readline
 
-n = int(input().strip())  # 포도주 잔의 개수
+n = int(input())
+wines = [int(input()) for _ in range(n)]
+dp = [0]*n # 포도주의 개수
 
-if n == 0:
+if n == 0 :
     print(0)
     sys.exit()
-
-wine = []
-for i in range(n):
-    wine.append(int(input().strip()))
-
-if n == 1:
-    print(wine[0])
-elif n == 2:
-    print(wine[0] + wine[1])
+elif n == 1: # 와인이 한개면, 무조건 마심
+    print(wines[0]) # (1)
+elif n == 2: # 와인이 두개여도 무조건 마심
+    print(wines[0] + wines[1]) # (1,2)
 else:
-    dp = [0] * n  # 마신 최대 포도주
+    dp[0] = wines[0]
+    dp[1] = wines[0] + wines[1]
+    dp[2] = max(dp[1], wines[1] + wines[2], wines[0] + wines[2]) # (1,2), (2,3), (1,3)
 
-    dp[0] = wine[0]
-    dp[1] = wine[0] + wine[1]
-    dp[2] = max(wine[0] + wine[2], wine[1] + wine[2], dp[1])
+    for i in range(3,n):
+        # 3번째 전 + 이전 + 현재 , 2번째 전 + 현재, 바로 이전 값 유지 
+        dp[i] += max(dp[i-3] + wines[i-1] + wines[i], dp[i-2] + wines[i], dp[i-1])
 
-    for i in range(3, n):
-        dp[i] = max(dp[i-3] + wine[i-1] + wine[i], wine[i] + dp[i-2], dp[i-1])
-
-    print(max(dp))
-
+    print(dp[-1])
