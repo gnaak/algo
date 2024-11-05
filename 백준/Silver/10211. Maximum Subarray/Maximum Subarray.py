@@ -1,9 +1,10 @@
 import sys
-
 input = sys.stdin.readline
 
 
-def max_subarray():
+# 테스트 케이스 실행
+tc = int(input())
+for _ in range(tc):
     n = int(input())
     arr = list(map(int, input().split()))
 
@@ -13,9 +14,3 @@ def max_subarray():
         max_sum = max(max_sum, current_sum)
 
     print(max_sum)
-
-
-# 테스트 케이스 실행
-tc = int(input())
-for _ in range(tc):
-    max_subarray()
