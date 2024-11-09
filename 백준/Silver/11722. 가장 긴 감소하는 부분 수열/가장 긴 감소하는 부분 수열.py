@@ -12,7 +12,7 @@ for i in range(1, n):
     for j in range(i-1,-1,-1):
         # i가 더 작다면,
         if a[i] < a[j]:
-            dp[i] = max(dp[i], dp[j]+1)
-            
+            if dp[i] < dp[j]+1 :
+                dp[i] = dp[j]+1 
 
 print(max(dp))
