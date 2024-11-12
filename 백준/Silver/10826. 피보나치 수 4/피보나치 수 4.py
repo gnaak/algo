@@ -1,15 +1,17 @@
-'''
-백준 실버 5
-피보나치수 4
-'''
+# 피보나치 수4
+
+import sys
+input = sys.stdin.readline
 
 n = int(input())
-dp = [0]*1000000
 
-for i in range(n+1):
-    dp[0] = 0
-    dp[1] = 1
-    if i > 1 :
-        dp[i] = dp[i-1]+dp[i-2]
+if n == 0:
+    print(0)
+elif n == 1:
+    print(1)
+else:
+    a, b = 0, 1
+    for _ in range(2,n+1):
+        a, b = b, a+b
 
-print(dp[n])
+    print(b)
