@@ -2,34 +2,35 @@
 
 import sys
 input = sys.stdin.readline
-inf = float('inf')
-n, m = map(int,input().split())
-trip = [list(map(int,input().split())) for _ in range(n)]
-dp = [[[inf, inf, inf] for _ in range(m)] for _ in range(n)]
 
-for j in range(m):
-    for k in range(3):
-        dp[0][j][k] = trip[0][j]
+def moon_travel(depth, dir, current, x):
+    global fuel
 
+    # 마지막 행에 도달한 경우
+    if depth == n - 1:
+        fuel = min(fuel, current)
+        return
+
+    # 오른쪽 이동
+    if dir != 1 and x + 1 < m:
+        moon_travel(depth + 1, 1, current + board[depth + 1][x + 1], x + 1)
+
+    # 아래로 이동
+    if dir != 2:
+        moon_travel(depth + 1, 2, current + board[depth + 1][x], x)
+
+    # 왼쪽 이동
+    if dir != 3 and x - 1 >= 0:
+        moon_travel(depth + 1, 3, current + board[depth + 1][x - 1], x - 1)
+
+# 입력 처리
+n, m = map(int, input().split())
+board = [list(map(int, input().split())) for _ in range(n)]
+
+fuel = float('inf')
+
+# 첫 번째 행에서 시작하는 모든 경우 탐색
 for i in range(m):
-    dp[1][i][1] = trip[0][i] + trip[1][i]
-    if i - 1 >= 0 :
-        dp[1][i][0] = trip[0][i-1] + trip[1][i]
-    if i + 1 < m :
-        dp[1][i][2] = trip[0][i+1] + trip[1][i]
+    moon_travel(0, 0, board[0][i], i)
 
-for i in range(2,n):
-    for j in range(m):
-        if j - 1 >= 0 :
-            dp[i][j][0] = min(dp[i-1][j-1][1], dp[i-1][j-1][2]) + trip[i][j]
-        if j + 1 < m :
-            dp[i][j][2] = min(dp[i-1][j+1][0], dp[i-1][j+1][1]) + trip[i][j]
-        dp[i][j][1] = min(dp[i-1][j][0], dp[i-1][j][2]) + trip[i][j]
-
-ans = inf
-for row in dp[n-1]:
-    for a in row:
-        if ans > a:
-            ans = a
-
-print(ans)
+print(fuel)
